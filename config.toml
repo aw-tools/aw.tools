@@ -1,0 +1,9 @@
+base_url = "https://aw.tools"
+title = "Agentic Workspace"
+compile_sass = false
+build_search_index = false
+
+[link_checker]
+# GitHub rewrites heading anchors in the browser, so a working link such as
+# lore#install reads as broken to the checker.
+skip_anchor_prefixes = ["https://github.com/"]
