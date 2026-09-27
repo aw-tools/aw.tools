@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ config.title }}{% endblock %}</title>
+</head>
+<body>
+  <header>
+    <a href="{{ get_url(path='/') }}">{{ config.title }}</a>
+    <nav>
+      <a href="{{ get_url(path='@/guide/_index.md') }}">Guide</a>
+      <a href="{{ get_url(path='@/spec/_index.md') }}">Spec</a>
+    </nav>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>
