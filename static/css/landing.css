@@ -266,6 +266,10 @@
   white-space: pre;
   overflow-x: auto;
 }
+/* the window clips anything outside it, so the ring goes inside */
+.term-body:focus-visible {
+  outline-offset: -2px;
+}
 .term-body .c {
   color: var(--code-ink);
   font-weight: 500;

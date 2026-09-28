@@ -3,6 +3,12 @@ title = "Agentic Workspace"
 compile_sass = false
 build_search_index = false
 
+# Class mode, so the colours come from static/css/code.css and the tokens; the
+# theme only decides which scopes share a class number.
+[markdown.highlighting]
+style = "class"
+theme = "github-light"
+
 [link_checker]
 # GitHub rewrites heading anchors in the browser, so a working link such as
 # lore#install reads as broken to the checker.

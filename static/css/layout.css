@@ -140,6 +140,10 @@
 .drawer.more-above::before, .drawer.more-below::after {
   opacity: 1;
 }
+/* the scrolling sidebar clips past its edges, where its links' rings would fall */
+.drawer a:focus-visible {
+  outline-offset: -2px;
+}
 
 .menu-btn {
   display: none;

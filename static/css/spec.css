@@ -74,6 +74,10 @@
 .superseded-note strong {
   color: var(--callout-edge);
 }
+/* the light accent falls short of 3:1 on this frame; the link colour does not */
+.superseded-note :focus-visible {
+  outline-color: var(--link);
+}
 .superseded-note .warn {
   flex: none;
   width: 24px;
