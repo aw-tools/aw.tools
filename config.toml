@@ -1,6 +1,6 @@
 base_url = "https://aw.tools"
 title = "Agentic Workspace"
-description = "aw keeps your agents' memory, instructions and skills in a git repository beside your code, so the next session starts where the last one stopped."
+description = "aw keeps the record of software work (decisions, findings, next steps) in a git repository beside your code, so the next session starts where the last one stopped."
 compile_sass = false
 build_search_index = false
 
