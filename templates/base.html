@@ -9,17 +9,56 @@
   <link rel="stylesheet" href="{{ get_url(path='css/fonts.css') }}">
   <link rel="stylesheet" href="{{ get_url(path='css/tokens.css') }}">
   <link rel="stylesheet" href="{{ get_url(path='css/base.css') }}">
+  <link rel="stylesheet" href="{{ get_url(path='css/header-footer.css') }}">
+  <link rel="stylesheet" href="{{ get_url(path='css/layout.css') }}">
+  <script src="{{ get_url(path='js/menu.js') }}" defer></script>
 </head>
 <body>
-  <header>
-    <a href="{{ get_url(path='/') }}">{{ config.title }}</a>
-    <nav>
-      <a href="{{ get_url(path='@/guide/_index.md') }}">Guide</a>
-      <a href="{{ get_url(path='@/spec/_index.md') }}">Spec</a>
-    </nav>
+  <a class="skip" href="#content">Skip to content</a>
+  {% include "mark.html" %}
+  {% set here = current_path | default(value="/") %}
+  <header class="site-head">
+    <div class="wrap">
+      <a class="brand" href="{{ get_url(path='/') }}"><svg viewBox="16 122 368 156" aria-hidden="true"><use href="#mark-a"/><use href="#mark-w"/></svg><span>agentic workspace</span></a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="{{ get_url(path='@/guide/_index.md') }}"{% if "/guide/" in here %} aria-current="true"{% endif %}>Guide</a>
+        <a href="{{ get_url(path='@/spec/_index.md') }}"{% if "/spec/" in here %} aria-current="true"{% endif %}>Spec</a>
+        <a href="https://github.com/aw-tools">GitHub</a>
+      </nav>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Menu">
+        <svg class="i-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <svg class="i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
   </header>
-  <main>
-    {% block content %}{% endblock %}
-  </main>
+  {% set side = "/guide/" in here %}
+  <div class="shell{% if side %} with-side{% endif %}">
+    <aside id="drawer" class="drawer" aria-label="Menu">
+      {% if side %}
+      {% set guide = get_section(path="guide/_index.md") %}
+      <p class="drawer-label"><a href="{{ guide.permalink }}">Guide</a></p>
+      <ol class="chapters">
+        {% for p in guide.pages %}
+        <li><a href="{{ p.permalink }}"{% if p.path == here %} aria-current="page"{% endif %}><span class="n">{% if p.slug != "glossary" %}{% if loop.index < 10 %}0{% endif %}{{ loop.index }}{% else %}·{% endif %}</span>{{ p.title }}</a></li>
+        {% endfor %}
+      </ol>
+      {% endif %}
+      <nav class="drawer-site" aria-label="Site">
+        <a href="{{ get_url(path='@/guide/_index.md') }}">Guide</a>
+        <a href="{{ get_url(path='@/spec/_index.md') }}">Spec</a>
+        <a href="https://github.com/aw-tools">GitHub</a>
+      </nav>
+    </aside>
+    <main id="content">
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+  <footer class="site-foot">
+    <div class="wrap">
+      <span>© 2026 Front Seed Labs Ltd</span>
+      <span>Guide and spec under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>; code under MIT or Apache-2.0</span>
+      <span><a href="https://github.com/aw-tools/aw.tools">Site source</a> · <a href="https://github.com/aw-tools/agentic-workspace">Guide and spec source</a></span>
+    </div>
+  </footer>
 </body>
 </html>

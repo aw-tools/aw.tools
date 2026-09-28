@@ -1,0 +1,75 @@
+/* The page header and footer, from the signed-off sketches. Sizes are rem, the
+   16px browser root, scaled up to sit beside the 18.7px body text. */
+
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.site-head {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding-inline: 16px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.site-head .wrap {
+  height: 70px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink);
+  text-decoration: none;
+  margin-right: auto;
+}
+.brand svg {
+  height: 28px;
+  width: auto;
+  fill: var(--heading);
+}
+.brand span {
+  font-family: var(--title-font);
+  font-weight: 600;
+  font-size: 1.33rem;
+  letter-spacing: -.005em;
+}
+.site-nav {
+  display: flex;
+  gap: 24px;
+}
+.site-nav a {
+  color: var(--ink-2);
+  text-decoration: none;
+  font-size: 1.1rem;
+  padding-block: 4px;
+  border-bottom: 2px solid transparent;
+}
+.site-nav a:hover {
+  color: var(--link);
+}
+.site-nav a[aria-current] {
+  color: var(--heading);
+  border-bottom-color: var(--accent);
+}
+
+.site-foot {
+  margin-top: 72px;
+  padding: 20px 16px 64px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-3);
+  font-size: .8rem;
+}
+.site-foot .wrap {
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  align-items: baseline;
+}
+.site-foot a {
+  color: var(--ink-2);
+}
