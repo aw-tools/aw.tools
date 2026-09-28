@@ -61,12 +61,13 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Check out the guide's source
+      - name: Check out the guide and spec source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: aw-tools/agentic-workspace
           path: tmp/agentic-workspace
           persist-credentials: false
+          fetch-depth: 0
 
       - name: Install just
         uses: taiki-e/install-action@6ef672efc2b5aabc787a9e94baf4989aa02a97df # v2.70.3

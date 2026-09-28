@@ -12,7 +12,7 @@ pagefind_sha256_linux_x86_64 := "afb824a9e7f64905a934900481cea5be679c03975e52732
 
 bin := justfile_directory() / ".tools"
 
-# The agentic-workspace checkout the guide comes from; CI checks it out itself.
+# The agentic-workspace checkout the guide and spec come from; CI checks it out itself.
 source := env("AW_SOURCE", justfile_directory() / ".." / "agentic-workspace")
 
 # List available recipes
@@ -48,9 +48,16 @@ setup:
 serve: tools import
     {{ bin }}/zola serve
 
+# Convert the guide and the spec into content/, checked against the source
+import: import-guide import-spec
+
 # Convert the guide into content/guide/, checked against the live sitemap
-import:
+import-guide:
     node scripts/import-guide.mjs "{{ source }}/guide" https://aw.tools/sitemap.xml
+
+# Convert the current and every superseded spec revision into content/spec/
+import-spec:
+    node scripts/import-spec.mjs "{{ source }}"
 
 # Download the pinned release binaries into .tools/, unless already there.
 tools:

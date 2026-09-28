@@ -14,12 +14,13 @@
   <link rel="stylesheet" href="{{ get_url(path='css/header-footer.css') }}">
   <link rel="stylesheet" href="{{ get_url(path='css/layout.css') }}">
   <link rel="stylesheet" href="{{ get_url(path='css/guide.css') }}">
+  <link rel="stylesheet" href="{{ get_url(path='css/spec.css') }}">
   {# modules, so each script's top-level names stay its own; modules also defer #}
   <script type="module" src="{{ get_url(path='js/menu.js') }}"></script>
   <script type="module" src="{{ get_url(path='js/theme.js') }}"></script>
   <script type="module" src="{{ get_url(path='js/sidebar.js') }}"></script>
 </head>
-<body>
+<body{% if page is defined and page.extra.current is defined and not page.extra.current %} data-pagefind-ignore="all"{% endif %}>
   <a class="skip" href="#content">Skip to content</a>
   {% include "mark.html" %}
   {% set here = current_path | default(value="/") %}
@@ -38,10 +39,25 @@
       </button>
     </div>
   </header>
-  {% set side = "/guide/" in here %}
-  <div class="shell{% if side %} with-side{% endif %}">
+  {% set is_spec = "/spec/" in here and page is defined %}
+  {% set side = "/guide/" in here or is_spec %}
+  <div class="shell{% if side %} with-side{% endif %}{% if is_spec %} spec{% endif %}">
     <aside id="drawer" class="drawer" aria-label="Menu">
-      {% if side %}
+      {% if is_spec %}
+      {% set spec = get_section(path="spec/_index.md") %}
+      <p class="drawer-label">On this page</p>
+      <ol class="toc-spec" data-toc="collapse">
+        {% for h in page.toc %}<li><a href="#{{ h.id }}">{{ h.title }}</a>
+          {% if h.children %}<ol>{% for c in h.children %}<li><a href="#{{ c.id }}">{{ c.title }}</a></li>{% endfor %}</ol>{% endif %}
+        </li>
+        {% endfor %}
+      </ol>
+      <p class="drawer-label revisions-label"><a href="{{ spec.permalink }}">Spec revisions</a></p>
+      <ol class="revisions">
+        {% for p in spec.pages | reverse %}<li><a href="{{ p.permalink }}" data-rev-link{% if p.path == page.path %} aria-current="page"{% endif %}>Revision {{ p.extra.revision }}<small>{{ p.extra.published | date(format="%-d %b %Y") }}</small></a>{% if p.extra.current %}<span class="badge">current</span>{% else %}<span class="badge superseded">superseded</span>{% endif %}</li>
+        {% endfor %}
+      </ol>
+      {% elif side %}
       {% set guide = get_section(path="guide/_index.md") %}
       <p class="drawer-label"><a href="{{ guide.permalink }}">Guide</a></p>
       <ol class="chapters">

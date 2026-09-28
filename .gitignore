@@ -4,3 +4,5 @@
 # the guide's pages are converted from agentic-workspace at build time
 /content/guide/*
 !/content/guide/_index.md
+# the spec's pages, including its redirect stub, are all build output
+/content/spec/
