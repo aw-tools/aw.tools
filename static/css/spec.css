@@ -1,0 +1,196 @@
+/* The spec page, from the signed-off sketch: the revision line, numbered
+   clauses, the superseded-revision warning, and the sidebar's contents and
+   revision list. */
+
+/* clause anchors are inline, not headings, so they need their own offset */
+.spec main [id] {
+  scroll-margin-top: 96px;
+}
+
+.spec-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 18px;
+  margin: 0 0 14px;
+  font-family: var(--mono-font);
+  font-size: .85rem;
+  color: var(--ink-3);
+}
+.badge {
+  font-family: var(--mono-font);
+  font-size: .72rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--heading);
+  background: var(--th-bg);
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+.badge.superseded {
+  color: var(--callout-edge);
+  background: var(--callout-bg);
+}
+
+/* a clause: its number a link to itself, a rule marking normative text */
+.spec main p:has(> .clause) {
+  position: relative;
+  padding: 2px 0 2px 16px;
+  border-left: 2px solid var(--line);
+}
+.spec main p:has(> .clause:hover), .spec main p:has(> .clause:focus-visible) {
+  border-left-color: var(--accent);
+}
+.spec main p:has(> .clause:target) {
+  border-left-color: var(--accent);
+  background: var(--surface);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.clause {
+  font-family: var(--mono-font);
+  font-size: .86em;
+  font-weight: 500;
+  color: var(--heading);
+  text-decoration: none;
+  margin-right: .3em;
+}
+.clause:hover {
+  text-decoration: underline;
+}
+
+/* the superseded-revision warning: a full frame, not only a left rule */
+.superseded-note {
+  display: flex;
+  gap: 14px;
+  margin: 22px 0 8px;
+  padding: 16px 18px;
+  background: var(--callout-bg);
+  border: 1.5px solid var(--callout-edge);
+  border-radius: var(--radius);
+}
+.superseded-note p {
+  margin: .4em 0;
+}
+.superseded-note strong {
+  color: var(--callout-edge);
+}
+.superseded-note .warn {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  margin-top: 3px;
+  fill: none;
+  stroke: var(--callout-edge);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+/* the corrections to a superseded revision, from SPEC-ERRATA.md */
+.errata {
+  margin-top: .9em;
+  padding-top: .7em;
+  border-top: 1px solid color-mix(in srgb, var(--callout-edge) 30%, transparent);
+  font-size: .92em;
+  color: var(--ink-2);
+}
+.errata ul, .errata ol {
+  margin: .3em 0;
+  padding-left: 1.2em;
+}
+.superseded-note .errata-label {
+  margin: 0 0 .3em;
+  font-family: var(--mono-font);
+  font-size: .8em;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--callout-edge);
+}
+.to-current {
+  display: inline-block;
+  margin-top: 2px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: var(--callout-edge);
+  color: var(--callout-bg);
+  text-decoration: none;
+  font-weight: 500;
+}
+.to-current:hover {
+  filter: brightness(1.1);
+}
+.missing-clause {
+  margin: 18px 0;
+  padding: 10px 14px;
+  border: 1px dashed var(--callout-edge);
+  border-radius: var(--radius);
+  color: var(--ink-2);
+  font-size: .95em;
+}
+
+/* the sidebar: this page's sections, then every revision */
+.revisions, .toc-spec, .toc-spec ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.revisions li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.revisions a, .toc-spec a {
+  display: block;
+  padding: 4px 8px;
+  margin-inline: -8px;
+  border-radius: 6px;
+  color: var(--ink-2);
+  text-decoration: none;
+}
+.revisions a {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.revisions small {
+  font-size: .8em;
+  color: var(--ink-3);
+}
+.revisions a[aria-current] {
+  color: var(--heading);
+  font-weight: 500;
+}
+.revisions a:hover, .toc-spec a:hover {
+  color: var(--link);
+  background: var(--surface);
+}
+.toc-spec > li > a {
+  color: var(--ink);
+}
+.toc-spec ol {
+  padding-left: 14px;
+  margin: 0 0 4px 2px;
+  border-left: 1px solid var(--line);
+}
+.toc-spec ol a {
+  font-size: .93em;
+}
+.toc-spec a.on {
+  color: var(--heading);
+  background: var(--surface);
+}
+/* with the script, only the section being read shows its subsections */
+.toc-spec.collapsible > li:not(.open) > ol {
+  display: none;
+}
+.revisions-label {
+  margin-top: 28px;
+}
+
+@media (max-width: 760px) {
+  .drawer .revisions + .drawer-site {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+}

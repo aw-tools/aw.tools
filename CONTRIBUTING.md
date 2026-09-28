@@ -15,12 +15,21 @@ The guide and the specification are written in
 [agentic-workspace](https://github.com/aw-tools/agentic-workspace) and rendered
 here. Change their text there, never in this repository.
 
-The build converts the guide into `content/guide/` and never commits the result.
-It reads a checkout of `agentic-workspace` beside this one, or the path in
-`AW_SOURCE`, and checks the live sitemap, so it needs the network. A push to
-that repository's `main` that touches the guide or the spec starts a rebuild
-here. When a chapter is renamed, add its old and new names to
-`guide-renames.txt`, so the old address keeps working.
+The build converts the guide into `content/guide/` and the spec into
+`content/spec/`, and never commits the result: `content/guide/_index.md` is the
+only tracked file in either directory. It reads a checkout of
+`agentic-workspace` beside this one, or the path in `AW_SOURCE`. The guide
+import checks the live sitemap, so it needs the network; the spec import does
+not. A push to that repository's `main` that touches the guide, the spec or its
+errata starts a rebuild here. When a chapter is renamed, add its old and new
+names to `guide-renames.txt`, so the old address keeps working.
+
+Every revision of `SPEC.md` gets its own page, at `/spec/r<N>/`. The current
+revision comes from the working tree; a superseded one comes from that
+repository's `spec-r<N>` tag, which freezes revision N's text as it stood at the
+commit that revision was replaced. `/spec/` redirects to the current revision.
+Corrections to a superseded revision come from `SPEC-ERRATA.md` beside
+`SPEC.md`.
 
 ## Development
 

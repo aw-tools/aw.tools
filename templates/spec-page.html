@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }}, revision {{ page.extra.revision }} · {{ config.title }}{% endblock %}
+
+{% block content %}
+{% set spec = get_section(path="spec/_index.md") %}
+{% set current = spec.pages | last %}
+<p class="spec-meta">
+  <span>Contract revision {{ page.extra.revision }}</span><span>Published {{ page.extra.published | date(format="%-d %B %Y") }}</span>
+  {% if page.extra.current %}<span class="badge">current</span>{% else %}<span class="badge superseded">superseded</span>{% endif %}
+</p>
+<h1>{{ page.title }}</h1>
+{% if not page.extra.current %}
+{% for p in spec.pages %}{% if p.extra.revision == page.extra.revision + 1 %}
+<div class="superseded-note" role="note">
+  <svg class="warn" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2z"/><path d="M12 10v5M12 18v.5"/></svg>
+  <div>
+    <p><strong>You are reading an older revision.</strong> Revision {{ page.extra.revision }} was replaced by revision {{ p.extra.revision }} on {{ p.extra.published | date(format="%-d %B %Y") }}{% if p.path != current.path %}, and revision {{ current.extra.revision }} is current{% endif %}. Its text is frozen: workspaces that declare revision {{ page.extra.revision }} still conform to it, but new work should follow the current revision.</p>
+    <p><a class="to-current" href="{{ current.permalink }}" data-rev-link>Read the current revision →</a></p>
+    {% if page.extra.errata %}<div class="errata"><p class="errata-label">Errata</p>{{ page.extra.errata | markdown | safe }}</div>{% endif %}
+  </div>
+</div>
+{% endif %}{% endfor %}
+{% endif %}
+<p class="missing-clause" role="status" data-revision="{{ page.extra.revision }}" hidden></p>
+{{ page.content | safe }}
+<script type="module" src="{{ get_url(path='js/spec.js') }}"></script>
+{% endblock %}
