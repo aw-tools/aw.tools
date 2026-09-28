@@ -81,6 +81,66 @@
   display: none;
 }
 
+/* the current chapter's sections, nested under it in the guide sidebar */
+.toc-guide {
+  list-style: none;
+  margin: 2px 0 6px calc(1.4em + 2px);
+  padding: 0 0 0 10px;
+  border-left: 1px solid var(--line);
+}
+.toc-guide li {
+  margin: 0;
+}
+.toc-guide a {
+  display: block;
+  padding: 4px 8px;
+  margin-inline: -8px 0;
+  border-radius: 6px;
+  font-size: .93em;
+  color: var(--ink-2);
+  text-decoration: none;
+}
+.toc-guide a:hover {
+  color: var(--link);
+  background: var(--surface);
+}
+.toc-guide a.on {
+  color: var(--heading);
+  background: var(--surface);
+}
+
+/* a sidebar taller than the window shows a thin scrollbar and fades the edge
+   that has more behind it. The fade is an overlay in the page colour, not a
+   mask: a mask would turn the phone menu's own background transparent. */
+.with-side .drawer {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+.drawer::before, .drawer::after {
+  content: "";
+  position: sticky;
+  z-index: 1;
+  display: block;
+  height: 48px;
+  margin-inline: -8px;
+  pointer-events: none;
+  opacity: 0;
+}
+/* sticky pins inside the scroll box's padding; offset by it to reach the edge */
+.drawer::before {
+  top: calc(-1 * var(--pad-top, 0px));
+  margin-bottom: -48px;
+  background: linear-gradient(var(--bg), transparent);
+}
+.drawer::after {
+  bottom: calc(-1 * var(--pad-bottom, 0px));
+  margin-top: -48px;
+  background: linear-gradient(transparent, var(--bg));
+}
+.drawer.more-above::before, .drawer.more-below::after {
+  opacity: 1;
+}
+
 .menu-btn {
   display: none;
   background: none;
@@ -135,6 +195,8 @@
     overflow: auto;
     padding: 16px 16px 40px;
     font-size: 1rem;
+    --pad-top: 16px;
+    --pad-bottom: 40px;
   }
   .menu-open body {
     overflow: hidden;

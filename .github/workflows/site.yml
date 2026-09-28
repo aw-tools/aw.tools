@@ -1,16 +1,20 @@
 name: Site
 
 # Checks, builds and indexes the site on every pull request, and deploys it to
-# GitHub Pages on a push to main. The build runs the same just recipe as a local
-# one, so the Zola and Pagefind versions come from the justfile alone.
+# GitHub Pages on a push to main or when agentic-workspace reports a change to
+# the guide or the spec. The build runs the same just recipe as a local one, so
+# the Zola and Pagefind versions come from the justfile alone.
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  repository_dispatch:
+    types: [source-changed]
 
 env:
+  AW_SOURCE: tmp/agentic-workspace
   ACTIONLINT_VERSION: 1.7.12
   ACTIONLINT_SHA256: 8aca8db96f1b94770f1b0d72b6dddcb1ebb8123cb3712530b08cc387b349a3d8
 
@@ -57,6 +61,13 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Check out the guide's source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: aw-tools/agentic-workspace
+          path: tmp/agentic-workspace
+          persist-credentials: false
+
       - name: Install just
         uses: taiki-e/install-action@6ef672efc2b5aabc787a9e94baf4989aa02a97df # v2.70.3
         with:
@@ -67,7 +78,7 @@ jobs:
 
       - name: Upload the site for Pages
         uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
-        if: github.event_name == 'push'
+        if: github.event_name != 'pull_request'
         with:
           path: public
 
@@ -122,7 +133,7 @@ jobs:
     name: Deploy
     needs:
       - ci
-    if: github.event_name == 'push'
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:

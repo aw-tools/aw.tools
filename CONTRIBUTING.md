@@ -15,6 +15,13 @@ The guide and the specification are written in
 [agentic-workspace](https://github.com/aw-tools/agentic-workspace) and rendered
 here. Change their text there, never in this repository.
 
+The build converts the guide into `content/guide/` and never commits the result.
+It reads a checkout of `agentic-workspace` beside this one, or the path in
+`AW_SOURCE`, and checks the live sitemap, so it needs the network. A push to
+that repository's `main` that touches the guide or the spec starts a rebuild
+here. When a chapter is renamed, add its old and new names to
+`guide-renames.txt`, so the old address keeps working.
+
 ## Development
 
 Run `just setup` once per clone: it points git at `.githooks`, whose pre-commit

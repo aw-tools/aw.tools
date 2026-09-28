@@ -12,6 +12,9 @@ pagefind_sha256_linux_x86_64 := "afb824a9e7f64905a934900481cea5be679c03975e52732
 
 bin := justfile_directory() / ".tools"
 
+# The agentic-workspace checkout the guide comes from; CI checks it out itself.
+source := env("AW_SOURCE", justfile_directory() / ".." / "agentic-workspace")
+
 # List available recipes
 default:
     @just --list
@@ -26,7 +29,7 @@ fmt-fix:
 
 # Build the site into public/ and index it for search. Every page renders as
 # <path>/index.html, so the glob keeps 404.html out of the search results.
-build: tools
+build: tools import
     {{ bin }}/zola build --force
     {{ bin }}/pagefind --site public --glob "**/index.html"
 
@@ -42,8 +45,12 @@ setup:
     git config core.hooksPath .githooks
 
 # Serve a live-reloading preview; search needs `just build`.
-serve: tools
+serve: tools import
     {{ bin }}/zola serve
+
+# Convert the guide into content/guide/, checked against the live sitemap
+import:
+    node scripts/import-guide.mjs "{{ source }}/guide" https://aw.tools/sitemap.xml
 
 # Download the pinned release binaries into .tools/, unless already there.
 tools:

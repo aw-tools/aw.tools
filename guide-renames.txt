@@ -1,0 +1,3 @@
+# Guide chapters renamed since they were published: the old slug, then the new
+# one. Each old URL stays up as a redirect to the new page. Until a renamed
+# chapter has its line here, site builds fail against the live sitemap.
