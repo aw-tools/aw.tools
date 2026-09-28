@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{% block title %}{{ page.title }}, revision {{ page.extra.revision }} · {{ config.title }}{% endblock %}
-
 {% block content %}
 {% set spec = get_section(path="spec/_index.md") %}
 {% set current = spec.pages | last %}

@@ -5,13 +5,15 @@
 //
 // Chapters take their order from the file number and their URL from the rest
 // of the filename; the glossary comes last. The first heading becomes the page
-// title, and a link to another chapter becomes Zola's `@/` form, so a broken
-// one fails the Zola build. Every old slug in guide-renames.txt becomes an alias
+// title, its opening paragraph the description (see lede.mjs), and a link to
+// another chapter becomes Zola's `@/` form, so a broken one fails the Zola
+// build. Every old slug in guide-renames.txt becomes an alias
 // of its new page. The build fails when the live sitemap cannot be fetched, or
 // lists a guide page that is now neither a page nor an alias.
 
 import { readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { basename, join } from "node:path";
+import { lede } from "./lede.mjs";
 
 const [src, sitemapUrl] = process.argv.slice(2);
 if (!src || !sitemapUrl) {
@@ -76,6 +78,8 @@ order.forEach((f, i) => {
   });
   const aliases = [...renames].filter(([, to]) => to === slugOf(f)).map(([from]) => `/guide/${from}/`);
   const front = [`title = ${quote(heading[1].trim())}`, `weight = ${i + 1}`];
+  const description = lede(body);
+  if (description) front.push(`description = ${quote(description)}`);
   if (aliases.length) front.push(`aliases = [${aliases.map(quote).join(", ")}]`);
   writeFileSync(join(out, `${slugOf(f)}.md`), `+++\n${front.join("\n")}\n+++\n\n${body}`);
 });

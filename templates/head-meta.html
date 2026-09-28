@@ -1,0 +1,43 @@
+{#- The title, and the metadata for search engines and link previews. It
+    describes `page`, else `section`; a redirect sets `page` to its target, so
+    the canonical link and the title name the page the reader lands on. With
+    neither, this is the not-found page, which has no address of its own and
+    stays unindexed. -#}
+{%- if page is defined -%}
+  {%- set title = page.title -%}
+  {%- if page.extra.revision is defined %}{% set title = title ~ ", revision " ~ page.extra.revision %}{% endif -%}
+  {%- set title = title ~ " · " ~ config.title -%}
+  {%- set description = page.description -%}
+  {%- set canonical = page.permalink -%}
+{%- elif section is defined -%}
+  {%- if section.path == "/" %}{% set title = config.title %}{% else %}{% set title = section.title ~ " · " ~ config.title %}{% endif -%}
+  {%- set description = section.description -%}
+  {%- set canonical = section.permalink -%}
+{%- else -%}
+  {%- set title = "Page not found · " ~ config.title -%}
+  {%- set description = "" -%}
+  {%- set canonical = "" -%}
+{%- endif -%}
+{%- if not description %}{% set description = config.description %}{% endif -%}
+<title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+  {%- if canonical %}
+  <link rel="canonical" href="{{ canonical | safe }}">
+  {%- else %}
+  <meta name="robots" content="noindex">
+  {%- endif %}
+  <link rel="icon" href="{{ get_url(path='favicon.ico') }}" sizes="32x32">
+  <link rel="icon" href="{{ get_url(path='favicon.svg') }}" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="{{ get_url(path='apple-touch-icon.png') }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ config.title }}">
+  <meta property="og:title" content="{{ title }}">
+  <meta property="og:description" content="{{ description }}">
+  {%- if canonical %}
+  <meta property="og:url" content="{{ canonical | safe }}">
+  {%- endif %}
+  <meta property="og:image" content="{{ get_url(path='og-image.png') }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Agentic Workspace: Your code is durable. The context isn't.">
+  <meta name="twitter:card" content="summary_large_image">

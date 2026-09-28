@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {# so the browser's blank page before the stylesheets follows the system theme, dark first #}
   <meta name="color-scheme" content="dark light">
-  <title>{% block title %}{{ config.title }}{% endblock %}</title>
+  {% include "head-meta.html" %}
   {# inline and before the stylesheets, so a stored theme applies before first paint #}
   <script>try { const t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}</script>
   <link rel="preload" href="{{ get_url(path='fonts/atkinson-hyperlegible-next/atkinson-hyperlegible-next-latin-wght-normal.woff2') }}" as="font" type="font/woff2" crossorigin>

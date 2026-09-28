@@ -2,9 +2,10 @@
     first chapter, whichever that is. The markup is Zola's own redirect page,
     the one /spec/ gets from redirect_to, which needs a fixed target. -#}
 {%- set target = section.pages[0].permalink -%}
+{%- set page = section.pages[0] -%}
 <!doctype html>
 <meta charset="utf-8">
-<title>Redirect</title>
+{% include "head-meta.html" %}
 <script>
   const target = "{{ target | safe }}";
   const hash = window.location.hash || "";
