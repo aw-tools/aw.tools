@@ -13,11 +13,13 @@
 // and be the only tag claiming it. Every numbered section and clause gets a
 // stable anchor id equal to its own number. SPEC-ERRATA.md holds the corrections
 // to superseded revisions, one "## Revision N" section each, shown on that
-// revision's page.
+// revision's page. A revision's opening paragraph is its description (see
+// lede.mjs).
 
 import { execFileSync } from "node:child_process";
 import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { lede } from "./lede.mjs";
 
 const [src] = process.argv.slice(2);
 if (!src) {
@@ -174,6 +176,8 @@ for (const rev of revisions) {
     `current = ${isCurrent}`,
     `published = ${JSON.stringify(rev.published)}`,
   ];
+  const description = lede(rev.body);
+  if (description) front.splice(2, 0, `description = ${JSON.stringify(description)}`);
   if (errata.has(rev.revision)) front.push(`errata = ${JSON.stringify(errata.get(rev.revision))}`);
   writeFileSync(join(out, `r${rev.revision}.md`), `+++\n${front.join("\n")}\n+++\n\n${rev.body}`);
 }

@@ -1,0 +1,21 @@
+{#- Zola's own redirect page, for redirect_to and aliases, with the metadata
+    every page carries. Zola passes it only `url`, so the site config is read
+    from config.toml, and the target page is looked up by its content path: a
+    target that is not a page fails the build rather than going unlabelled. -#}
+{%- set config = load_data(path="config.toml") -%}
+{#- https://aw.tools/spec/r1/ is spec/r1.md. The prefix comes from get_url, not
+    config.toml, since zola serve swaps base_url for its own address -#}
+{%- set path = url | replace(from=get_url(path="/") ~ "/", to="") -%}
+{%- set page = get_page(path=(path ~ ".md") | replace(from="/.md", to=".md")) -%}
+<!doctype html>
+<meta charset="utf-8">
+{% include "head-meta.html" %}
+<script>
+  const target = "{{ url | safe }}";
+  const hash = window.location.hash || "";
+  window.location.replace(target + hash);
+</script>
+<noscript>
+  <meta http-equiv="refresh" content="0; url={{ url | safe }}">
+</noscript>
+<p><a href="{{ url | safe }}">Click here</a> to be redirected.</p>
