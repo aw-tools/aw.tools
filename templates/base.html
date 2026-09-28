@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  {# so the browser's blank page before the stylesheets follows the system theme, dark first #}
+  <meta name="color-scheme" content="dark light">
   <title>{% block title %}{{ config.title }}{% endblock %}</title>
   {# inline and before the stylesheets, so a stored theme applies before first paint #}
   <script>try { const t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}</script>
@@ -15,11 +17,13 @@
   <link rel="stylesheet" href="{{ get_url(path='css/layout.css') }}">
   <link rel="stylesheet" href="{{ get_url(path='css/guide.css') }}">
   <link rel="stylesheet" href="{{ get_url(path='css/spec.css') }}">
+  <link rel="stylesheet" href="{{ get_url(path='css/code.css') }}">
   {%- block head_extra -%}{%- endblock -%}
   {# modules, so each script's top-level names stay its own; modules also defer #}
   <script type="module" src="{{ get_url(path='js/menu.js') }}"></script>
   <script type="module" src="{{ get_url(path='js/theme.js') }}"></script>
   <script type="module" src="{{ get_url(path='js/sidebar.js') }}"></script>
+  <script type="module" src="{{ get_url(path='js/code-copy.js') }}"></script>
 </head>
 <body{% if page is defined and page.extra.current is defined and not page.extra.current %} data-pagefind-ignore="all"{% endif %}>
   <a class="skip" href="#content">Skip to content</a>
@@ -69,14 +73,14 @@
         {% endfor %}
       </ol>
       {% endif %}
-      <nav class="drawer-site" aria-label="Site">
+      <nav class="drawer-site" aria-label="Site links">
         <a href="{{ get_url(path='@/guide/_index.md') }}">Guide</a>
         <a href="{{ get_url(path='@/spec/_index.md') }}">Spec</a>
         <a href="https://github.com/aw-tools">GitHub</a>
         <button class="theme-btn" type="button" data-theme-btn>System</button>
       </nav>
     </aside>
-    <main id="content">
+    <main id="content" tabindex="-1">
       {% block content %}{% endblock %}
     </main>
   </div>

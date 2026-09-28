@@ -1,6 +1,6 @@
-/* Base styles: elements, code highlighting and the search box, all drawn from
-   tokens.css. Page layout, the header and footer, and the code-block toolbar
-   are built on top of these elsewhere. */
+/* Base styles: elements and the search box, all drawn from tokens.css. Page
+   layout, the header and footer, and code highlighting with the code-block
+   toolbar are built on top of these elsewhere. */
 
 * {
   box-sizing: border-box;
@@ -129,6 +129,14 @@ td:first-child {
   border: 2px solid var(--accent);
   border-radius: 6px;
 }
+/* the skip link's target takes focus so the next Tab starts inside it, lands
+   below the sticky header, and needs no ring of its own: it is not a control */
+#content {
+  scroll-margin-top: 96px;
+}
+#content:focus {
+  outline: none;
+}
 .sr {
   position: absolute;
   width: 1px;
@@ -136,29 +144,6 @@ td:first-child {
   overflow: hidden;
   clip: rect(0 0 0 0);
   white-space: nowrap;
-}
-
-/* Syntax colours for Zola's class-based highlighting, the same in both themes
-   because the block is dark in both: commands and keys green, strings amber,
-   flags light gold, comments and operators dim. */
-pre .z-d-7 {
-  color: var(--code-accent);
-}
-pre .z-d-6 {
-  color: var(--code-string);
-}
-pre [data-lang="shellscript"] .z-d-6 {
-  color: var(--code-ink);
-}
-pre .z-d-4, pre .z-d-5, pre .z-d-12 {
-  color: var(--code-flag);
-}
-pre .z-d-3 {
-  color: var(--code-dim);
-  font-style: italic;
-}
-pre .z-d-8, pre .z-d-10 {
-  color: var(--code-dim);
 }
 
 /* The search box and its results, which replace the sidebar while a query is

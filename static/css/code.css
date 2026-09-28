@@ -1,0 +1,89 @@
+/* Code blocks: syntax colours for Zola's highlighter and the copy button that
+   js/code-copy.js adds to each block. Both sit on the code-block tokens, which
+   stay dark in both themes. */
+
+/* one line of a highlighted block, as Zola's highlighting docs ask */
+.giallo-l {
+  display: inline-block;
+  min-height: 1lh;
+  width: 100%;
+}
+
+/* Zola numbers the classes by the github-light theme's colours in hex order;
+   only that grouping is used here, never its colours. A Zola upgrade or a
+   theme change can renumber them, so recheck this map when bumping either.
+   Commands and keys green, strings amber, flags and variables light gold,
+   comments and operators dim. Shell builtins such as cd share the flags'
+   class, so they show gold too. */
+.giallo .z-1, .giallo .z-9 {
+  color: var(--code-flag);
+}
+.giallo .z-2 {
+  color: var(--code-string);
+}
+/* the shell grammar reads every argument as a string */
+.giallo [data-lang="shellscript"] .z-2 {
+  color: var(--code-ink);
+}
+.giallo .z-3, .giallo .z-6 {
+  color: var(--code-accent);
+}
+.giallo .z-4, .giallo .z-5, .giallo .z-8 {
+  color: var(--code-dim);
+}
+.giallo .z-5, .giallo .z-i {
+  font-style: italic;
+}
+.giallo .z-b {
+  font-weight: 700;
+}
+.giallo .z-u {
+  text-decoration: underline;
+}
+
+/* the copy button sits in the block's top corner and stays put while a long
+   line scrolls under it */
+.code {
+  position: relative;
+  margin: 1.2em 0;
+}
+.code > pre.giallo {
+  margin: 0;
+  padding-right: 60px;
+}
+.code-copy {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 34px;
+  height: 34px;
+  padding: 7px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: var(--code-bg);
+  color: var(--code-dim);
+  cursor: pointer;
+}
+.code-copy:hover {
+  color: var(--code-ink);
+  border-color: var(--code-rule-2);
+}
+.code-copy svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.code-copy .i-done, .code-copy.done .i-copy {
+  display: none;
+}
+.code-copy.done .i-done {
+  display: block;
+}
+.code-copy.done {
+  color: var(--code-accent);
+}
