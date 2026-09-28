@@ -1,6 +1,46 @@
 {% extends "base.html" %}
 
+{%- block head_extra -%}
+<link rel="stylesheet" href="{{ get_url(path='css/landing.css') }}">
+<script type="module" src="{{ get_url(path='js/landing.js') }}"></script>
+{%- endblock -%}
+
+{# the hero carries its own lockup, so the sticky header's brand starts hidden
+   and fades in once the hero's lockup scrolls past it (see js/landing.js) #}
+{% block brand %}<a class="brand away" href="{{ get_url(path='/') }}"><svg viewBox="16 122 368 156" aria-hidden="true"><use href="#mark-a"/><use href="#mark-w"/></svg><span>agentic workspace</span></a>{% endblock %}
+
+{% block shell_class %} landing{% endblock %}
+
 {% block content %}
-<h1>{{ section.title }}</h1>
-{{ section.content | safe }}
+<section class="lp-hero">
+  <div class="lp-lockup">
+    <a class="lp-lockup-link" href="{{ get_url(path='/') }}"><svg viewBox="16 122 368 156" aria-hidden="true"><use href="#mark-a"/><use href="#mark-w"/></svg><span class="lp-word">agentic workspace<small>aw.tools</small></span></a>
+    <div class="lp-lockup-rule"></div>
+  </div>
+  <div class="lp-hero-grid">
+    <div class="lp-hero-copy">{% include "landing/hero-copy.html" %}</div>
+    <figure class="term" aria-label="A session in an example workspace">
+      <div class="term-bar"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="term-title">myproject.workspace</span><button class="term-replay" type="button" hidden>Replay</button></div>
+      <pre class="term-body" data-term tabindex="0">{% include "landing/session.html" %}</pre>
+    </figure>
+  </div>
+</section>
+
+{% include "landing/problem.html" %}
+
+<section class="lp-how">
+  <h2>How it works</h2>
+  <p class="sub">A workspace is an outer git repository. Your code repositories sit inside it as members, which it never commits. It commits only its own record, and the record travels with it.</p>
+  {% include "landing/flow.html" %}
+</section>
+
+{% include "landing/record.html" %}
+
+<section class="lp-tool">
+  <h2>The tool</h2>
+  {% include "landing/tool.html" %}
+</section>
+
+{% include "landing/contract.html" %}
+{% include "landing/start.html" %}
 {% endblock %}

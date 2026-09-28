@@ -1,0 +1,822 @@
+/* The landing page: a hero with a typed terminal session beside the pitch,
+   the problem in four short lines, an animated diagram of the workspace loop,
+   what the record holds, the most used commands, the contract, and how to get
+   started. Ported from the signed-off sketch onto this site's own tokens. */
+
+.shell.landing > main {
+  max-width: 1120px;
+}
+.landing > main > section {
+  margin-top: 104px;
+}
+.landing > main > section.lp-hero {
+  margin-top: 0;
+}
+.landing h1 {
+  font-size: clamp(2.2rem, 3.8vw, 3rem);
+}
+.landing h2 {
+  margin: 0 0 .5em;
+}
+.landing .sub {
+  color: var(--ink-2);
+  max-width: 62ch;
+  margin-top: 0;
+}
+.landing .lede {
+  max-width: 54ch;
+  font-size: 1.15em;
+}
+.landing .more {
+  margin-top: 20px;
+}
+.landing .more a, a.more {
+  font-weight: 500;
+  text-decoration: none;
+}
+.landing .more a::after, a.more::after {
+  content: " →";
+}
+
+/* the sticky header's brand waits while the hero's own lockup is in view,
+   then fades in once it has scrolled past (toggled by the landing script) */
+.site-head .brand {
+  transition: opacity .25s, transform .25s, visibility .25s;
+}
+.site-head .brand.away {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-head .brand {
+    transition: none;
+  }
+}
+
+/* the hero's own lockup, above the fold; the sticky header's brand fades in
+   once this has scrolled past it (see the landing script) */
+.lp-lockup {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.lp-lockup-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.lp-lockup-link svg {
+  height: 44px;
+  width: auto;
+  flex: none;
+  fill: var(--heading);
+}
+.lp-word {
+  font-family: var(--title-font);
+  font-weight: 600;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+.lp-word small {
+  display: block;
+  font-family: var(--body-font);
+  font-weight: 400;
+  font-size: .7rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--label);
+  margin-top: 5px;
+}
+.lp-lockup-rule {
+  flex: 1;
+  border-bottom: 1px solid var(--ink-3);
+  margin-bottom: 14px;
+}
+
+.lp-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: 48px;
+  align-items: start;
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 12px 20px;
+  margin-top: 28px;
+}
+.landing .cta .more {
+  margin-top: 0;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  background: var(--surface);
+  text-decoration: none;
+  font-weight: 500;
+}
+.btn:hover {
+  border-color: var(--accent);
+}
+.btn.primary {
+  background: var(--m-bg);
+  border-color: var(--m-bg);
+  color: var(--m-fg);
+}
+.btn.primary:hover {
+  filter: brightness(1.08);
+}
+
+/* the install command, copyable: a terminal-styled chip, dark in both themes */
+.install {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 28px;
+  padding: 8px 8px 8px 18px;
+  background: var(--code-bg);
+  color: var(--code-ink);
+  border: 1px solid var(--code-rule);
+  border-radius: var(--radius);
+  font-family: var(--mono-font);
+  font-size: .95rem;
+}
+.install code {
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  white-space: nowrap;
+  overflow-x: auto;
+  min-width: 0;
+}
+.install-prompt {
+  color: var(--code-accent);
+}
+.install-copy {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  padding: 7px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  color: var(--code-dim);
+  cursor: pointer;
+}
+.install-copy:hover {
+  color: var(--code-ink);
+  border-color: var(--code-rule-2);
+}
+.install-copy svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.install-copy .i-done, .install-copy.done .i-copy {
+  display: none;
+}
+.install-copy.done .i-done {
+  display: block;
+}
+.install-copy.done {
+  color: var(--code-accent);
+}
+.install-more {
+  margin: 10px 0 0;
+  font-size: .9rem;
+}
+.install-more a {
+  color: var(--ink-2);
+}
+
+/* a terminal window; dark in both themes, like the code blocks */
+.term {
+  margin: 0;
+  background: var(--code-bg);
+  border: 1px solid var(--code-rule);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 28px 60px -28px rgb(0 0 0 / .55);
+}
+.term-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 12px 9px 14px;
+  border-bottom: 1px solid var(--code-rule);
+  font-family: var(--mono-font);
+  font-size: .78rem;
+  color: var(--code-dim);
+}
+.dots {
+  display: flex;
+  gap: 6px;
+}
+.dots i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--code-rule-2);
+}
+.term-title {
+  flex: 1;
+}
+.term-replay {
+  font: inherit;
+  color: var(--code-dim);
+  background: none;
+  border: 1px solid var(--code-rule-2);
+  border-radius: 6px;
+  padding: 3px 10px;
+  cursor: pointer;
+}
+.term-replay:hover {
+  color: var(--code-ink);
+}
+/* hidden, it keeps its space, so the bar never resizes when it appears */
+.term-replay[hidden] {
+  display: inline-block;
+  visibility: hidden;
+}
+.term-body {
+  margin: 0;
+  padding: 16px 18px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  font-size: .74rem;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-x: auto;
+}
+.term-body .c {
+  color: var(--code-ink);
+  font-weight: 500;
+}
+.term-body .c::before {
+  content: "$ ";
+  color: var(--code-accent);
+}
+.term-body .o {
+  color: color-mix(in srgb, var(--code-ink) 72%, var(--code-bg));
+}
+.term-body .o b {
+  color: var(--code-flag);
+  font-weight: 500;
+}
+.term-body .n {
+  color: var(--code-dim);
+  font-style: italic;
+}
+.term-body .typing::after {
+  content: "▍";
+  color: var(--code-accent);
+}
+
+.problems {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+.problems li {
+  margin: 0;
+  padding-top: 14px;
+  border-top: 2px solid var(--accent);
+}
+.problems p {
+  margin: 6px 0 0;
+}
+.pn {
+  font-family: var(--mono-font);
+  font-size: .8rem;
+  color: var(--label);
+  letter-spacing: .06em;
+}
+
+.records {
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0;
+  border-top: 1px solid var(--line);
+}
+.records li {
+  display: grid;
+  grid-template-columns: 13em minmax(0, 1fr);
+  gap: 2px 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  margin: 0;
+}
+.records code {
+  grid-row: span 2;
+  padding-top: 4px;
+  background: none;
+  padding-inline: 0;
+  color: var(--heading);
+  font-weight: 500;
+}
+.records strong {
+  display: block;
+  font-family: var(--title-font);
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+.records p {
+  margin: .2em 0 0;
+  color: var(--ink-2);
+  font-size: .95em;
+}
+/* the one full-width band on the page, so the record and the tool below it do
+   not run together; the shadow paints the band past the column to both edges
+   of the window without widening the page */
+.lp-record {
+  padding-block: 64px;
+  background: var(--surface);
+  box-shadow: 0 0 0 100vmax var(--surface);
+  clip-path: inset(0 -100vmax);
+}
+
+.lp-verbs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 56px;
+}
+.lp-verbs > :nth-child(1) {
+  grid-area: 1 / 1;
+}
+.lp-verbs > :nth-child(2) {
+  grid-area: 2 / 1;
+}
+.lp-verbs > :nth-child(3) {
+  grid-area: 1 / 2;
+}
+.lp-verbs > :nth-child(4) {
+  grid-area: 2 / 2;
+}
+.lp-verbs .more {
+  grid-area: 3 / 1 / 4 / 3;
+}
+.lp-verbs h3 {
+  margin: 24px 0 10px;
+  font-family: var(--body-font);
+  font-size: .8rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--label);
+}
+.lp-verbs dl {
+  display: grid;
+  grid-template-columns: 9.5em minmax(0, 1fr);
+  gap: 12px 24px;
+  margin: 0;
+}
+.lp-verbs dd {
+  margin: 0;
+  color: var(--ink-2);
+}
+
+.lp-contract {
+  padding: 36px 40px;
+  background: var(--surface);
+  border-radius: 14px;
+}
+.lp-contract p {
+  max-width: 62ch;
+}
+
+.needs {
+  color: var(--ink-2);
+  max-width: 62ch;
+}
+.steps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 40px;
+  list-style: none;
+  counter-reset: step;
+  padding: 0;
+  margin: 28px 0;
+}
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 54px;
+  margin: 0 0 12px;
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 34px;
+  height: 34px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--mono-font);
+  font-size: .9rem;
+  color: var(--heading);
+}
+.steps li > p {
+  margin: 4px 0 0;
+  font-weight: 500;
+}
+.steps pre, .steps .code {
+  margin: .6em 0 0;
+}
+
+/* the "how it works" diagram: a workspace on each of two machines, joined by
+   a wire the record travels down; the figcaption's steps drive it */
+.flow {
+  margin: 32px 0 0;
+}
+.flow-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px minmax(0, 1fr);
+  align-items: center;
+}
+.machine {
+  border: 1px dashed var(--ink-3);
+  border-radius: 16px;
+  padding: 14px 16px 16px;
+  transition: opacity .5s;
+}
+.machine-label {
+  margin: 0 0 10px;
+  font-family: var(--mono-font);
+  font-size: .75rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.flow code {
+  background: none;
+  padding: 0;
+  font-weight: 500;
+}
+.flow small {
+  display: block;
+  font-size: .75rem;
+  color: var(--ink-3);
+}
+.ws {
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  background: var(--surface);
+}
+.ws-label, .ctx-label {
+  margin: 0 0 10px;
+  line-height: 1.3;
+}
+.ctx {
+  border: 2px solid var(--accent);
+  border-radius: 10px;
+  padding: 12px;
+  background: var(--bg);
+  transition: box-shadow .4s;
+}
+.ctx ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.ctx li {
+  position: relative;
+  margin: 0;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--code-inline);
+  font-family: var(--mono-font);
+  font-size: .75rem;
+  transition: background .4s, color .4s;
+}
+.members {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+.member {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1.5px dashed var(--ink-3);
+  border-radius: 10px;
+  line-height: 1.3;
+  transition: border-color .4s, background .4s;
+}
+.wire {
+  position: relative;
+  height: 2px;
+  margin-inline: 14px;
+  background: repeating-linear-gradient(90deg, var(--ink-3) 0 6px, transparent 6px 12px);
+}
+.remote {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  padding: 4px 12px;
+  border: 1.5px solid var(--ink-3);
+  border-radius: 999px;
+  background: var(--bg);
+  font-family: var(--mono-font);
+  font-size: .78rem;
+  color: var(--ink-2);
+}
+.packet {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 30%, transparent);
+  opacity: 0;
+}
+
+.flow[data-step] .m2 {
+  opacity: .4;
+}
+.flow[data-step="4"] .m2, .flow[data-step="5"] .m2 {
+  opacity: 1;
+}
+.flow[data-step="1"] .m1 .f-state, .flow[data-step="3"] .m1 .f-state, .flow[data-step="5"] .m2 .f-state {
+  background: var(--m-bg);
+  color: var(--m-fg);
+}
+.flow[data-step="2"] .m1 .member {
+  border-style: solid;
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.flow[data-step="3"] .m1 .ctx {
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+/* absolute, so the marker never widens the chip and reflows the wrapped list */
+.flow[data-step="3"] .m1 .f-state::after {
+  content: "●";
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  margin-left: 4px;
+  translate: 0 -50%;
+  color: var(--code-flag);
+}
+.flow[data-step="4"] .wire {
+  background: repeating-linear-gradient(90deg, var(--accent) 0 6px, transparent 6px 12px);
+}
+.flow[data-step="4"] .packet {
+  animation: travel 1.8s ease-in-out forwards;
+}
+.flow[data-step="4"] .m2 .ctx {
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+@keyframes travel {
+  0% { left: 0; opacity: 1; }
+  40%, 60% { left: 50%; opacity: 1; }
+  100% { left: 100%; opacity: 1; }
+}
+
+.flow-pause {
+  font: inherit;
+  font-family: var(--mono-font);
+  font-size: .78rem;
+  color: var(--ink-2);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 3px 10px;
+  cursor: pointer;
+}
+.flow-pause:hover {
+  color: var(--ink);
+  border-color: var(--ink-3);
+}
+
+.flow-steps {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+.flow-steps li {
+  margin: 0;
+}
+.flow-steps button {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 10px 0 0;
+  border: 0;
+  border-top: 3px solid var(--line);
+  background: none;
+  color: var(--ink-3);
+  font: inherit;
+  font-size: .9rem;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  transition: color .3s;
+}
+.flow-steps button span {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--mono-font);
+  font-size: .78rem;
+}
+.flow-steps button:hover {
+  color: var(--ink-2);
+}
+.flow-steps button[aria-current="step"] {
+  color: var(--ink);
+}
+/* each step's line is a progress bar: done steps stay full, the current one
+   fills while the diagram plays, and the slide changes when it completes */
+.flow-steps button::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.flow-steps button.done::before, .flow-steps button[aria-current="step"]::before {
+  transform: none;
+}
+.flow.playing .flow-steps button[aria-current="step"]::before {
+  animation: fill-x 3.2s linear;
+}
+@media (hover: hover) {
+  .flow.playing:hover .flow-steps button[aria-current="step"]::before {
+    animation-play-state: paused;
+  }
+}
+/* keyboard focus anywhere in the figure pauses it, same as hover */
+.flow.playing:focus-within .flow-steps button[aria-current="step"]::before {
+  animation-play-state: paused;
+}
+@keyframes fill-x {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes fill-y {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+.flow:not([data-step]) .flow-steps button {
+  color: var(--ink-2);
+  cursor: default;
+}
+
+/* the terminal's typing is timed in the landing script, guarded there; everything
+   else that moves on its own here is CSS animation or transition, stopped
+   below: the packet's travel, the step bar's own fill, and the diagram's
+   transitions between steps */
+@media (prefers-reduced-motion: reduce) {
+  .flow[data-step="4"] .packet {
+    animation: none;
+    left: 100%;
+    opacity: 1;
+  }
+  .flow.playing .flow-steps button::before {
+    animation: none;
+  }
+  .machine, .ctx, .ctx li, .member, .flow-steps button {
+    transition: none;
+  }
+}
+
+@media (max-width: 960px) {
+  .lp-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
+  }
+  .problems {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 760px) {
+  .landing > main > section {
+    margin-top: 72px;
+  }
+  .landing .lede {
+    font-size: 1.05em;
+  }
+  .install {
+    font-size: .82rem;
+    padding-left: 14px;
+    gap: 8px;
+  }
+  .problems {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .records li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .records code {
+    grid-row: auto;
+  }
+  .lp-verbs {
+    display: block;
+  }
+  .lp-verbs dl {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+  .lp-verbs dd {
+    margin-bottom: 12px;
+  }
+  .lp-contract {
+    padding: 24px 20px;
+  }
+  .flow-stage {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .wire {
+    height: 72px;
+    width: 2px;
+    margin: 0 auto;
+    background: repeating-linear-gradient(180deg, var(--ink-3) 0 6px, transparent 6px 12px);
+  }
+  .flow[data-step="4"] .wire {
+    background: repeating-linear-gradient(180deg, var(--accent) 0 6px, transparent 6px 12px);
+  }
+  .packet {
+    left: 50%;
+    top: 0;
+  }
+  .flow[data-step="4"] .packet {
+    animation-name: travel-down;
+  }
+  @keyframes travel-down {
+    0% { top: 0; opacity: 1; }
+    40%, 60% { top: 50%; opacity: 1; }
+    100% { top: 100%; opacity: 1; }
+  }
+  .flow-steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+  .flow-steps button {
+    padding: 6px 0 6px 12px;
+    border-top: 0;
+    border-left: 3px solid var(--line);
+  }
+  .flow-steps button::before {
+    top: 0;
+    bottom: 0;
+    left: -3px;
+    right: auto;
+    width: 3px;
+    height: auto;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  .flow.playing .flow-steps button[aria-current="step"]::before {
+    animation-name: fill-y;
+  }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  .flow[data-step="4"] .packet {
+    left: 50%;
+    top: 100%;
+  }
+}

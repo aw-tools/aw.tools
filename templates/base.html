@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="{{ get_url(path='css/layout.css') }}">
   <link rel="stylesheet" href="{{ get_url(path='css/guide.css') }}">
   <link rel="stylesheet" href="{{ get_url(path='css/spec.css') }}">
+  {%- block head_extra -%}{%- endblock -%}
   {# modules, so each script's top-level names stay its own; modules also defer #}
   <script type="module" src="{{ get_url(path='js/menu.js') }}"></script>
   <script type="module" src="{{ get_url(path='js/theme.js') }}"></script>
@@ -26,7 +27,7 @@
   {% set here = current_path | default(value="/") %}
   <header class="site-head">
     <div class="wrap">
-      <a class="brand" href="{{ get_url(path='/') }}"><svg viewBox="16 122 368 156" aria-hidden="true"><use href="#mark-a"/><use href="#mark-w"/></svg><span>agentic workspace</span></a>
+      {% block brand %}<a class="brand" href="{{ get_url(path='/') }}"><svg viewBox="16 122 368 156" aria-hidden="true"><use href="#mark-a"/><use href="#mark-w"/></svg><span>agentic workspace</span></a>{% endblock %}
       <nav class="site-nav" aria-label="Site">
         <a href="{{ get_url(path='@/guide/_index.md') }}"{% if "/guide/" in here %} aria-current="true"{% endif %}>Guide</a>
         <a href="{{ get_url(path='@/spec/_index.md') }}"{% if "/spec/" in here %} aria-current="true"{% endif %}>Spec</a>
@@ -41,7 +42,7 @@
   </header>
   {% set is_spec = "/spec/" in here and page is defined %}
   {% set side = "/guide/" in here or is_spec %}
-  <div class="shell{% if side %} with-side{% endif %}{% if is_spec %} spec{% endif %}">
+  <div class="shell{% if side %} with-side{% endif %}{% if is_spec %} spec{% endif %}{% block shell_class %}{% endblock %}">
     <aside id="drawer" class="drawer" aria-label="Menu">
       {% if is_spec %}
       {% set spec = get_section(path="spec/_index.md") %}

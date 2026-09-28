@@ -1,0 +1,44 @@
+<figure class="flow" data-flow>
+  <div class="flow-stage">
+    <div class="machine m1">
+      <p class="machine-label">This machine</p>
+      <div class="ws">
+        <p class="ws-label"><code>myproject.workspace/</code><small>the workspace, a git repository</small></p>
+        <div class="ctx">
+          <p class="ctx-label"><code>context/</code><small>the record, committed</small></p>
+          <ul><li class="f-state">STATE.md</li><li>DECISIONS.md</li><li>FINDINGS.md</li><li>NOTES.md</li><li>engagements/</li></ul>
+        </div>
+        <div class="members">
+          <p class="member"><code>api/</code><small>member, never committed</small></p>
+          <p class="member"><code>web/</code><small>member, never committed</small></p>
+        </div>
+      </div>
+    </div>
+    <div class="wire" aria-hidden="true"><span class="remote">remote</span><i class="packet"></i></div>
+    <div class="machine m2">
+      <p class="machine-label">Any other machine</p>
+      <div class="ws">
+        <p class="ws-label"><code>myproject.workspace/</code><small>cloned, then <code>aw bootstrap</code></small></p>
+        <div class="ctx">
+          <p class="ctx-label"><code>context/</code><small>the same record</small></p>
+          <ul><li class="f-state">STATE.md</li><li>DECISIONS.md</li><li>FINDINGS.md</li><li>NOTES.md</li><li>engagements/</li></ul>
+        </div>
+        <div class="members">
+          <p class="member"><code>api/</code><small>cloned by bootstrap</small></p>
+          <p class="member"><code>web/</code><small>cloned by bootstrap</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <figcaption>
+    <button type="button" class="flow-pause" data-flow-pause>Pause</button>
+    <ol class="flow-steps">
+      <li><button type="button" data-go="1"><span>1</span>Every session starts with reading the state file.</button></li>
+      <li><button type="button" data-go="2"><span>2</span>The work happens in the code repositories.</button></li>
+      <li><button type="button" data-go="3"><span>3</span>The agent rewrites the state file and commits the record.</button></li>
+      <li><button type="button" data-go="4"><span>4</span>A push sends the record to the remote.</button></li>
+      <li><button type="button" data-go="5"><span>5</span>The next session resumes on any machine.</button></li>
+    </ol>
+    <p class="more"><a href="{{ get_url(path='@/guide/the-shape-of-a-workspace.md') }}">The shape of a workspace</a></p>
+  </figcaption>
+</figure>

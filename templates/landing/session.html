@@ -1,0 +1,27 @@
+<span class="c">aw sync</span>
+<span class="o">workspace myproject
+repo      web                      fetched
+layer     workspace                fetched
+repo      api                      fetched
+verify    2 repo(s), 0 skipped, 0 failed, 0 skill(s) linked, 0 shadowed</span>
+<span class="c">aw status</span>
+<span class="o">workspace myproject
+working tree
+workspace                clean
+api                      clean
+web                      clean
+ahead/behind
+workspace                ahead 0, behind 0 (fetched 0s ago)
+api                      ahead 0, <b>behind 2</b> (fetched 0s ago)
+web                      ahead 0, behind 0 (fetched 0s ago)</span>
+<span class="c">aw fast-forward</span>
+<span class="o">workspace myproject
+repo      web                      up to date
+repo      api                      <b>advanced</b> 2263290..9112a87 (2 commit(s))
+verify    1 advanced, 1 up to date, 0 skipped, 0 failed</span>
+<span class="n"># the agent works, then rewrites context/STATE.md</span>
+<span class="c">git commit -am "record: api pagination planned"</span>
+<span class="o">[trunk e19dee2] record: api pagination planned
+ 1 file changed, 1 insertion(+), 1 deletion(-)</span>
+<span class="c">git push</span>
+<span class="o">   85e841f..e19dee2  trunk -> trunk</span>
