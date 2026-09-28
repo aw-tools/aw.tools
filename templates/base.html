@@ -4,6 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{{ config.title }}{% endblock %}</title>
+  {# inline and before the stylesheets, so a stored theme applies before first paint #}
+  <script>try { const t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}</script>
   <link rel="preload" href="{{ get_url(path='fonts/atkinson-hyperlegible-next/atkinson-hyperlegible-next-latin-wght-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ get_url(path='fonts/fraunces/fraunces-latin-opsz-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="{{ get_url(path='css/fonts.css') }}">
@@ -11,7 +13,9 @@
   <link rel="stylesheet" href="{{ get_url(path='css/base.css') }}">
   <link rel="stylesheet" href="{{ get_url(path='css/header-footer.css') }}">
   <link rel="stylesheet" href="{{ get_url(path='css/layout.css') }}">
-  <script src="{{ get_url(path='js/menu.js') }}" defer></script>
+  {# modules, so each script's top-level names stay its own; modules also defer #}
+  <script type="module" src="{{ get_url(path='js/menu.js') }}"></script>
+  <script type="module" src="{{ get_url(path='js/theme.js') }}"></script>
 </head>
 <body>
   <a class="skip" href="#content">Skip to content</a>
@@ -25,6 +29,7 @@
         <a href="{{ get_url(path='@/spec/_index.md') }}"{% if "/spec/" in here %} aria-current="true"{% endif %}>Spec</a>
         <a href="https://github.com/aw-tools">GitHub</a>
       </nav>
+      <button class="theme-btn" type="button" data-theme-btn>System</button>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Menu">
         <svg class="i-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
         <svg class="i-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
@@ -47,6 +52,7 @@
         <a href="{{ get_url(path='@/guide/_index.md') }}">Guide</a>
         <a href="{{ get_url(path='@/spec/_index.md') }}">Spec</a>
         <a href="https://github.com/aw-tools">GitHub</a>
+        <button class="theme-btn" type="button" data-theme-btn>System</button>
       </nav>
     </aside>
     <main id="content">
