@@ -1,0 +1,13 @@
+<section class="lp-start" id="get-started">
+  <h2>Get started</h2>
+  <p class="needs"><code>aw</code> needs git, garden 2.6 or later, and dprint to keep work files tidy. Homebrew installs garden with <code>aw</code>.</p>
+  <ol class="steps">
+    <li><p>Install the tool.</p><pre><code data-lang="shellscript">brew install aw-tools/tap/aw-cli</code></pre></li>
+    <li><p>Create a workspace and go into it.</p><pre><code data-lang="shellscript">aw init myproject.workspace
+cd myproject.workspace</code></pre></li>
+    <li><p>Clone each repository you work on, then adopt it.</p><pre><code data-lang="shellscript">git clone git@github.com:you/myrepo.git
+aw adopt myrepo</code></pre></li>
+    <li><p>Bootstrap.</p><pre><code data-lang="shellscript">aw bootstrap</code></pre></li>
+  </ol>
+  <p>If something fails, <code>aw doctor</code> says what is missing. <a href="{{ get_url(path='@/guide/getting-started.md') }}">Chapter 3</a> covers other ways to install and the first session.</p>
+</section>
