@@ -13,9 +13,11 @@
   <link rel="stylesheet" href="{{ get_url(path='css/base.css') }}">
   <link rel="stylesheet" href="{{ get_url(path='css/header-footer.css') }}">
   <link rel="stylesheet" href="{{ get_url(path='css/layout.css') }}">
+  <link rel="stylesheet" href="{{ get_url(path='css/guide.css') }}">
   {# modules, so each script's top-level names stay its own; modules also defer #}
   <script type="module" src="{{ get_url(path='js/menu.js') }}"></script>
   <script type="module" src="{{ get_url(path='js/theme.js') }}"></script>
+  <script type="module" src="{{ get_url(path='js/sidebar.js') }}"></script>
 </head>
 <body>
   <a class="skip" href="#content">Skip to content</a>
@@ -44,7 +46,9 @@
       <p class="drawer-label"><a href="{{ guide.permalink }}">Guide</a></p>
       <ol class="chapters">
         {% for p in guide.pages %}
-        <li><a href="{{ p.permalink }}"{% if p.path == here %} aria-current="page"{% endif %}><span class="n">{% if p.slug != "glossary" %}{% if loop.index < 10 %}0{% endif %}{{ loop.index }}{% else %}·{% endif %}</span>{{ p.title }}</a></li>
+        <li><a href="{{ p.permalink }}"{% if p.path == here %} aria-current="page"{% endif %}><span class="n">{% if p.slug != "glossary" %}{% if loop.index < 10 %}0{% endif %}{{ loop.index }}{% else %}·{% endif %}</span>{{ p.title }}</a>
+          {% if p.path == here and p.toc %}<ol class="toc-guide" data-toc>{% for h in p.toc %}<li><a href="#{{ h.id }}">{{ h.title }}</a></li>{% endfor %}</ol>{% endif %}
+        </li>
         {% endfor %}
       </ol>
       {% endif %}

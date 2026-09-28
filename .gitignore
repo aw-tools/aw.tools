@@ -1,3 +1,6 @@
 /.tools/
 /public/
 /tmp/
+# the guide's pages are converted from agentic-workspace at build time
+/content/guide/*
+!/content/guide/_index.md

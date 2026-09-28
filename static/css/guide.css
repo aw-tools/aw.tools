@@ -1,0 +1,67 @@
+/* The guide's contents page, the previous and next links under each chapter and
+   the heading anchors, from the signed-off sketches, sized as the header is. */
+
+.contents li::marker {
+  color: var(--accent);
+  font-family: var(--mono-font);
+}
+
+.pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 56px;
+}
+.pager a {
+  display: block;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--heading);
+  font-family: var(--title-font);
+  font-weight: 600;
+  font-size: 1.22rem;
+}
+.pager a:hover {
+  border-color: var(--accent);
+}
+.pager small {
+  display: block;
+  font-family: var(--body-font);
+  font-weight: 400;
+  font-size: .87rem;
+  color: var(--ink-3);
+  margin-bottom: 4px;
+}
+.pager .next {
+  text-align: right;
+  grid-column: 2;
+}
+
+/* a heading linked to lands below the sticky header, not under it */
+main h2, main h3 {
+  scroll-margin-top: 96px;
+}
+.anchor {
+  margin-left: .35em;
+  color: var(--ink-3);
+  text-decoration: none;
+  font-weight: 400;
+  opacity: 0;
+}
+h2:hover .anchor, h3:hover .anchor, .anchor:focus-visible {
+  opacity: 1;
+}
+.anchor:hover {
+  color: var(--link);
+}
+
+@media (max-width: 760px) {
+  .pager {
+    grid-template-columns: 1fr;
+  }
+  .pager .next {
+    grid-column: 1;
+  }
+}
