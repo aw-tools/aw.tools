@@ -1,0 +1,92 @@
+/* The design tokens: the one live copy of the site's type, shape and colour.
+   Dark is the default; a stored choice (data-theme on the root) wins, then the
+   system's preference, then dark. Every text colour meets WCAG AA (4.5:1)
+   against each background it is used on, in both themes; --accent is for
+   rules, markers and focus rings, and meets the 3:1 asked of those. */
+
+:root {
+  color-scheme: dark;
+  --title-font: "Fraunces", Georgia, serif;
+  --body-font: "Atkinson Hyperlegible Next", "Helvetica Neue", Arial, sans-serif;
+  --mono-font: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --body-size: 18.7px;
+  --radius: 8px;
+
+  --bg: #12140f;
+  --surface: #1b1e17;
+  --ink: #eceee5;
+  --ink-2: #b8bcaf;
+  --ink-3: #858a7d;
+  --line: #2e3229;
+  --accent: #6fbe3a;
+  --link: #8fd65a;
+  --heading: #8fd65a;
+  --label: #d9b25c;
+  --th-bg: #22331a;
+  --th-ink: #8fd65a;
+  --callout-bg: #26231f;
+  --callout-edge: #d9b25c;
+  --code-inline: #2b2823;
+  --m-bg: #58ac25;
+  --m-fg: #12140f;
+  --m-fg2: #3a2f0e;
+
+  /* code blocks are dark in both themes, so their palette never switches */
+  --code-bg: #211f1b;
+  --code-ink: #e4e1d9;
+  --code-accent: #8fd65a;
+  --code-dim: #9c968c;
+  --code-string: #d9b25c;
+  --code-flag: #e6d29a;
+  --code-line: transparent;
+  --code-rule: #34312b;
+  --code-rule-2: #4a463e;
+}
+
+/* The light greens and the faint ink are darker than the kin page's, which
+   fell short of AA on the light ground; the hues are unchanged. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --bg: #fbfbf8;
+    --surface: #f1f2ea;
+    --ink: #161a14;
+    --ink-2: #4a5044;
+    --ink-3: #6a6f68;
+    --line: #d9dcd2;
+    --accent: #509d22;
+    --link: #297400;
+    --heading: #297400;
+    --label: #7c5903;
+    --th-bg: #d6e9cc;
+    --th-ink: #297400;
+    --callout-bg: #efe6d2;
+    --callout-edge: #7c5903;
+    --code-inline: #e9eadf;
+    --m-bg: #2f8500;
+    --m-fg: #fbfbf8;
+    --m-fg2: #e6d29a;
+  }
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #fbfbf8;
+  --surface: #f1f2ea;
+  --ink: #161a14;
+  --ink-2: #4a5044;
+  --ink-3: #6a6f68;
+  --line: #d9dcd2;
+  --accent: #509d22;
+  --link: #297400;
+  --heading: #297400;
+  --label: #7c5903;
+  --th-bg: #d6e9cc;
+  --th-ink: #297400;
+  --callout-bg: #efe6d2;
+  --callout-edge: #7c5903;
+  --code-inline: #e9eadf;
+  --m-bg: #2f8500;
+  --m-fg: #fbfbf8;
+  --m-fg2: #e6d29a;
+}
