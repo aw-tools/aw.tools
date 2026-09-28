@@ -48,24 +48,25 @@
   {% set side = "/guide/" in here or is_spec %}
   <div class="shell{% if side %} with-side{% endif %}{% if is_spec %} spec{% endif %}{% block shell_class %}{% endblock %}">
     <aside id="drawer" class="drawer" aria-label="Menu">
+      {% if side %}{% include "search-box.html" %}{% endif %}
       {% if is_spec %}
       {% set spec = get_section(path="spec/_index.md") %}
-      <p class="drawer-label">On this page</p>
-      <ol class="toc-spec" data-toc="collapse">
+      <p class="drawer-label" data-when-searching="hide">On this page</p>
+      <ol class="toc-spec" data-toc="collapse" data-when-searching="hide">
         {% for h in page.toc %}<li><a href="#{{ h.id }}">{{ h.title }}</a>
           {% if h.children %}<ol>{% for c in h.children %}<li><a href="#{{ c.id }}">{{ c.title }}</a></li>{% endfor %}</ol>{% endif %}
         </li>
         {% endfor %}
       </ol>
-      <p class="drawer-label revisions-label"><a href="{{ spec.permalink }}">Spec revisions</a></p>
-      <ol class="revisions">
+      <p class="drawer-label revisions-label" data-when-searching="hide"><a href="{{ spec.permalink }}">Spec revisions</a></p>
+      <ol class="revisions" data-when-searching="hide">
         {% for p in spec.pages | reverse %}<li><a href="{{ p.permalink }}" data-rev-link{% if p.path == page.path %} aria-current="page"{% endif %}>Revision {{ p.extra.revision }}<small>{{ p.extra.published | date(format="%-d %b %Y") }}</small></a>{% if p.extra.current %}<span class="badge">current</span>{% else %}<span class="badge superseded">superseded</span>{% endif %}</li>
         {% endfor %}
       </ol>
       {% elif side %}
       {% set guide = get_section(path="guide/_index.md") %}
-      <p class="drawer-label"><a href="{{ guide.permalink }}">Guide</a></p>
-      <ol class="chapters">
+      <p class="drawer-label" data-when-searching="hide"><a href="{{ guide.permalink }}">Guide</a></p>
+      <ol class="chapters" data-when-searching="hide">
         {% for p in guide.pages %}
         <li><a href="{{ p.permalink }}"{% if p.path == here %} aria-current="page"{% endif %}><span class="n">{% if p.slug != "glossary" %}{% if loop.index < 10 %}0{% endif %}{{ loop.index }}{% else %}·{% endif %}</span>{{ p.title }}</a>
           {% if p.path == here and p.toc %}<ol class="toc-guide" data-toc>{% for h in p.toc %}<li><a href="#{{ h.id }}">{{ h.title }}</a></li>{% endfor %}</ol>{% endif %}

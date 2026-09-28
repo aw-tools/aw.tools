@@ -1,0 +1,13 @@
+{# The search box and its results. Both start hidden and js/search.js shows the
+   box, so without the script there is no dead control. Anything marked
+   data-when-searching="hide" makes way for the results while a query is typed.
+   The script comes first so the results stay next to what follows them. #}
+<script type="module" src="{{ get_url(path='js/search.js') }}"></script>
+<div class="search" role="search" hidden>
+  <input type="search" placeholder="Search" aria-label="Search the guide and spec" aria-controls="search-results" aria-keyshortcuts="/" autocomplete="off" spellcheck="false"><kbd aria-hidden="true">/</kbd>
+  <button class="search-clear" type="button" aria-label="Clear search and show the contents" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></button>
+</div>
+<div id="search-results" class="search-results" hidden>
+  <p class="search-status" role="status"></p>
+  <ol></ol>
+</div>

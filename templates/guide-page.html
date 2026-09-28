@@ -3,8 +3,11 @@
 {% block title %}{{ page.title }} · {{ config.title }}{% endblock %}
 
 {% block content %}
+{# search indexes the chapter's text only, tagged with where it came from #}
+<article data-pagefind-body data-pagefind-meta="source:Guide">
 <h1>{{ page.title }}</h1>
 {{ page.content | safe }}
+</article>
 <nav class="pager" aria-label="Chapters">
   {% if page.lower %}<a class="prev" href="{{ page.lower.permalink }}"><small>← Previous</small>{{ page.lower.title }}</a>{% endif %}
   {% if page.higher %}<a class="next" href="{{ page.higher.permalink }}"><small>Next →</small>{{ page.higher.title }}</a>{% endif %}

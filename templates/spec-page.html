@@ -9,6 +9,8 @@
   <span>Contract revision {{ page.extra.revision }}</span><span>Published {{ page.extra.published | date(format="%-d %B %Y") }}</span>
   {% if page.extra.current %}<span class="badge">current</span>{% else %}<span class="badge superseded">superseded</span>{% endif %}
 </p>
+{# only the current revision is indexed, so hits never repeat across revisions #}
+<article{% if page.extra.current %} data-pagefind-body data-pagefind-meta="source:Spec"{% endif %}>
 <h1>{{ page.title }}</h1>
 {% if not page.extra.current %}
 {% for p in spec.pages %}{% if p.extra.revision == page.extra.revision + 1 %}
@@ -24,5 +26,6 @@
 {% endif %}
 <p class="missing-clause" role="status" data-revision="{{ page.extra.revision }}" hidden></p>
 {{ page.content | safe }}
+</article>
 <script type="module" src="{{ get_url(path='js/spec.js') }}"></script>
 {% endblock %}

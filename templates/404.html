@@ -2,7 +2,20 @@
 
 {% block title %}Page not found · {{ config.title }}{% endblock %}
 
+{%- block head_extra -%}
+<link rel="stylesheet" href="{{ get_url(path='css/not-found.css') }}">
+{%- endblock -%}
+
 {% block content %}
-<h1>Page not found</h1>
-<p><a href="{{ get_url(path='/') }}">Go to the home page</a></p>
+<div class="lost">
+  <p class="lost-code">404</p>
+  <h1>This page does not exist</h1>
+  <p class="lede">The address may be mistyped, or the page may have moved.<br>Search the guide and the spec, or start from one of these.</p>
+  {% include "search-box.html" %}
+  <ul class="lost-links" data-when-searching="hide">
+    <li><a href="{{ get_url(path='@/guide/_index.md') }}"><strong>Guide</strong><span>What a workspace is, and how to run one</span></a></li>
+    <li><a href="{{ get_url(path='@/spec/_index.md') }}"><strong>Spec</strong><span>The current revision of the contract</span></a></li>
+    <li><a href="{{ get_url(path='/') }}"><strong>Home</strong><span>The front page</span></a></li>
+  </ul>
+</div>
 {% endblock %}
