@@ -1,13 +1,16 @@
-{% extends "base.html" %}
-
-{% block title %}{{ section.title }} · {{ config.title }}{% endblock %}
-
-{% block content %}
-<h1>{{ section.title }}</h1>
-{{ section.content | safe }}
-<ol class="contents">
-  {% for p in section.pages %}
-  <li><a href="{{ p.permalink }}">{{ p.title }}</a></li>
-  {% endfor %}
-</ol>
-{% endblock %}
+{#- /guide/ only repeated the sidebar's contents, so it sends the reader to the
+    first chapter, whichever that is. The markup is Zola's own redirect page,
+    the one /spec/ gets from redirect_to, which needs a fixed target. -#}
+{%- set target = section.pages[0].permalink -%}
+<!doctype html>
+<meta charset="utf-8">
+<title>Redirect</title>
+<script>
+  const target = "{{ target | safe }}";
+  const hash = window.location.hash || "";
+  window.location.replace(target + hash);
+</script>
+<noscript>
+  <meta http-equiv="refresh" content="0; url={{ target | safe }}">
+</noscript>
+<p><a href="{{ target | safe }}">Click here</a> to be redirected.</p>

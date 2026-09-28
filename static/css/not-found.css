@@ -1,0 +1,61 @@
+/* The not-found page, from the signed-off sketch: the search box in the page,
+   its results below, and a few places to start from, which the results replace
+   while a query is typed. */
+
+.lost {
+  padding-block: 24px 64px;
+}
+.lost-code {
+  margin: 0 0 12px;
+  font-family: var(--mono-font);
+  font-size: .85rem;
+  letter-spacing: .12em;
+  color: var(--label);
+}
+/* the sketch's lede; the only other one here is the landing page's */
+.lost .lede {
+  font-size: 1.25em;
+  color: var(--ink-2);
+  margin: 16px 0 28px;
+}
+.lost .search input {
+  font-size: 1rem;
+  padding-block: 11px;
+}
+.lost-links {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 0;
+  border-top: 1px solid var(--line);
+}
+.lost-links li {
+  border-bottom: 1px solid var(--line);
+}
+.lost-links a {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
+  padding: 14px 8px;
+  margin-inline: -8px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--ink-2);
+}
+.lost-links a:hover, .lost-links a:focus-visible {
+  background: var(--surface);
+}
+.lost-links strong {
+  min-width: 4.5em;
+  font-weight: 500;
+  color: var(--heading);
+}
+.lost-links span {
+  font-size: .9em;
+}
+
+@media (max-width: 760px) {
+  .lost-links a {
+    flex-direction: column;
+  }
+}

@@ -1,10 +1,5 @@
-/* The guide's contents page, the previous and next links under each chapter and
-   the heading anchors, from the signed-off sketches, sized as the header is. */
-
-.contents li::marker {
-  color: var(--accent);
-  font-family: var(--mono-font);
-}
+/* The previous and next links under each chapter and the heading anchors, from
+   the signed-off sketches, sized as the header is. */
 
 .pager {
   display: grid;
