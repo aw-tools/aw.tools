@@ -24,6 +24,8 @@
   <script type="module" src="{{ get_url(path='js/theme.js') }}"></script>
   <script type="module" src="{{ get_url(path='js/sidebar.js') }}"></script>
   <script type="module" src="{{ get_url(path='js/code-copy.js') }}"></script>
+  {# page views for the published site only, so zola serve previews send none #}
+  {% if config.mode == "build" and config.extra.analytics_token %}<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ config.extra.analytics_token }}"}'></script>{% endif %}
 </head>
 <body{% if page is defined and page.extra.current is defined and not page.extra.current %} data-pagefind-ignore="all"{% endif %}>
   <a class="skip" href="#content">Skip to content</a>

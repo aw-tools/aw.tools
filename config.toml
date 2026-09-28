@@ -14,3 +14,8 @@ theme = "github-light"
 # GitHub rewrites heading anchors in the browser, so a working link such as
 # lore#install reads as broken to the checker.
 skip_anchor_prefixes = ["https://github.com/"]
+
+[extra]
+# Cloudflare Web Analytics site token; public by design, it ships in every
+# page. Empty switches analytics off.
+analytics_token = "75a02738656e43d19067039781bc9311"
