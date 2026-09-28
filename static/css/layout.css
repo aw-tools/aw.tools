@@ -108,7 +108,7 @@
 }
 
 @media (max-width: 760px) {
-  .site-nav {
+  .site-nav, .site-head .theme-btn {
     display: none;
   }
   .menu-btn {
@@ -155,6 +155,9 @@
     text-decoration: none;
     padding: 6px 0;
     font-size: 1.05rem;
+  }
+  .drawer-site .theme-btn {
+    margin-top: 10px;
   }
 
   /* wide tables scroll inside themselves rather than widening the page */
