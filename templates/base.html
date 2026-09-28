@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  {# so the browser's blank page before the stylesheets follows the system theme, dark first #}
+  <meta name="color-scheme" content="dark light">
   <title>{% block title %}{{ config.title }}{% endblock %}</title>
   {# inline and before the stylesheets, so a stored theme applies before first paint #}
   <script>try { const t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}</script>
