@@ -4,6 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}{{ config.title }}{% endblock %}</title>
+  <link rel="preload" href="{{ get_url(path='fonts/atkinson-hyperlegible-next/atkinson-hyperlegible-next-latin-wght-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ get_url(path='fonts/fraunces/fraunces-latin-opsz-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="{{ get_url(path='css/fonts.css') }}">
+  <link rel="stylesheet" href="{{ get_url(path='css/tokens.css') }}">
+  <link rel="stylesheet" href="{{ get_url(path='css/base.css') }}">
 </head>
 <body>
   <header>
