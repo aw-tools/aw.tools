@@ -84,14 +84,19 @@ if (term && !reduced) {
   seen.observe(term);
 }
 
-// the header's brand appears once the hero's own lockup has scrolled under it
+// the header's brand appears once the hero's own lockup has scrolled under it,
+// measured afresh on each report and on load, as a cold load's first report
+// can be wrong
 const brand = document.querySelector(".site-head .brand.away");
 const lockup = document.querySelector(".lp-lockup-link");
 if (brand && lockup) {
-  const head = document.querySelector(".site-head").offsetHeight;
-  new IntersectionObserver(([e]) => brand.classList.toggle("away", e.isIntersecting), {
-    rootMargin: `-${head}px 0px 0px 0px`,
+  const head = document.querySelector(".site-head");
+  const sync = () =>
+    brand.classList.toggle("away", lockup.getBoundingClientRect().bottom > head.getBoundingClientRect().bottom);
+  new IntersectionObserver(sync, {
+    rootMargin: `-${head.offsetHeight}px 0px 0px 0px`,
   }).observe(lockup);
+  addEventListener("load", sync, { once: true });
 }
 
 // the diagram: five steps; advances on its own until someone picks a step.
